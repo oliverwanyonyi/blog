@@ -52,6 +52,8 @@ nav ul {
   background-image: linear-gradient(90deg, var(--blue), var(--greyish));
   background-clip: text;
   color: transparent;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
 }
 a {
   text-decoration: none;
@@ -518,7 +520,7 @@ label {
 
 @media (max-width: 500px) {
   .form {
-    width: 90vw;
+    width: 100% !important;
   }
   .signup-section {
     padding: 4rem 1.5rem;
