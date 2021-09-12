@@ -1,0 +1,24 @@
+<aside class="left-navigation">
+  <% if(users.length > 1){ %>
+  <h1 class="users-title"><%= users.length %> users</h1>
+  <% }else{ %>
+  <h1 class="users-title"><%= users.length %> user</h1>
+  <% } %>
+
+  <ul class="cards">
+    <% for(let user of users) { %>
+    <li class="card-user">
+      <div class="user">
+        <div class="avatar">
+          <img src="/<%= user.image %>" alt="" />
+        </div>
+        <div class="user-info">
+          <h3 class="name"><%= user.username %></h3>
+        </div>
+      </div>
+      <blockquote><%= user.bio %></blockquote>
+      <button>Follow</button>
+    </li>
+    <% } %>
+  </ul>
+</aside>

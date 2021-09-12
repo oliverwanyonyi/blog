@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <%- include('../includes/navbar.ejs') %>
+  </body>
+  <section class="signup-section">
+    <div class="wrapper">
+      <img src="/assets/write.svg" alt="" />
+      <form
+        action="  <%if (editing){%> /editpost <% } else {
+        %> /createpost <%}%>"
+        method="POST"
+        class="form"
+        enctype="multipart/form-data"
+      >
+        <% if(message) {%>
+        <div class="message">
+          <h1 class="message-info"><%= message %></h1>
+        </div>
+        <% } %>
+        <div class="form-control">
+          <div class="profile-img image-placeholder">
+            <img src="" alt="" id="image" />
+            <img src="/assets/img.jpg" class="default" alt="" />
+            <label for="file" id="fileInput" class="fileInput"
+              ><i class="fas fa-plus"></i
+            ></label>
+            <input
+              type="file"
+              name="image"
+              value=" <% if(editing) {%> <%= post.image %> <%} else {%> <%= prevInput.image%> <%}%> "
+              id="file"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-control">
+            <label for="category">Category</label>
+            <input
+              class="input"
+              type="text"
+              name="category"
+              value=" <% if(editing) {%> <%= post.category %><%} else {%> <%= prevInput.category%> <%}%> "
+              id="category"
+              placeholder="category"
+            />
+          </div>
+          <div class="form-control">
+            <label for="username">Title</label>
+            <input
+              class="input"
+              type="text"
+              value=" <% if(editing) {%> <%= post.title %><%} else {%> <%= prevInput.title%> <%}%> "
+              name="title"
+              id="title"
+              placeholder="title"
+            />
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="textarea">Your post goes here</label>
+          <textarea
+            class="input"
+            name="postdescription"
+            id="textaraea"
+            placeholder="Whats happening folk"
+          >
+ <% if(editing) { %> <%= post.postdescription %> <%} else {%> <%= prevInput.postDesc%> <% } %></textarea
+          >
+        </div>
+        <% if (editing) { %>
+        <input type="hidden" value="<%= post._id %>" name="postId" />
+        <% } %> <% if(editing){%> <button type="submit">Update Post</button> <%
+        } else { %> <button type="submit">Create Post</button> <%}%>
+      </form>
+    </div>
+  </section>
+</html>

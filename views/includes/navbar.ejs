@@ -1,0 +1,35 @@
+<nav>
+  <div class="nav-left">
+    <a href="/" class="logo">blogger</a>
+    <div class="hamburger-menu">
+      <span class="line"></span><span class="line"></span
+      ><span class="line"></span>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <% if(!isAuthenticated) { %>
+    <li class="nav-item"><a href="/login">Login</a></li>
+    <li class="nav-item"><a href="/signup" class="signup">Sign up</a></li>
+    <%} else { %>
+    <li>
+      <form action="/logout" method="POST">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </li>
+    <li class="nav-item">
+      <a href="/createpost" class="create-post">Create post</a>
+    </li>
+
+    <li class="nav-item profile">
+      <a href="/user/<%= realuser._id %>?updateaccount=true"
+        ><img src="/<%= realuser.image %>" alt=""
+      /></a>
+    </li>
+    <%} %>
+  </ul>
+  <div class="menu-btn">
+    <span class="line"></span><span class="line"></span
+    ><span class="line"></span>
+  </div>
+</nav>

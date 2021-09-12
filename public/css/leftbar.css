@@ -1,0 +1,96 @@
+.left-navigation {
+  flex: 2.5;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1.5rem;
+}
+.cards {
+  display: flex;
+  flex-direction: column;
+}
+.users-title {
+  margin: 1.5rem 0 0 0;
+  font-weight: normal;
+  font-size: 1rem;
+  text-align: center;
+}
+.card-user {
+  cursor: pointer;
+  background: rgba(20, 20, 20, 0.2);
+  padding: 1rem 1rem;
+  width: 100%;
+  margin: 1rem 0;
+  border: 1px solid #bcbcbc;
+  border-radius: 0.3rem;
+}
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1rem 0;
+}
+blockquote {
+  color: #d8d8d8;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  margin-bottom: 1rem;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.avatar {
+  width: 5rem;
+  height: 5rem;
+  overflow: hidden;
+  border: 3px solid #287be7;
+  border-radius: 50%;
+}
+.avatar img {
+  height: 100%;
+  object-fit: cover;
+}
+.user .name {
+  font-size: 1rem;
+  font-weight: normal;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.card-user button {
+  display: inline-block;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.7rem;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  background: #1263cc;
+  color: #ffffff;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+  .left-navigation {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+    overflow-y: auto;
+    width: 0;
+    background: var(--secondary);
+    transition: 0.3s;
+  }
+  .left-navigation.active {
+    width: 100%;
+    padding: 3rem;
+  }
+}

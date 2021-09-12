@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <%- include('../includes/navbar.ejs') %>
+    <section
+      class="error-section"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 3rem;
+        text-align: center;
+      "
+    >
+      <div class="error-container wrapper">
+        <img src="/assets/pagenotfound.svg" alt="" />
+        <div class="error-info">
+          <h1 class="error">404 page not found</h1>
+          <h5>
+            The page you are trying to find may have been deleted
+            <a href="/">Home page</a>
+          </h5>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

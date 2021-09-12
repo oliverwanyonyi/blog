@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <%- include('../includes/navbar.ejs') %>
+    <section class="blog-app">
+      <div class="singlepost-container">
+        <div class="single-post">
+          <% if(message) {%>
+          <div class="message">
+            <h1 class="message-info"><%= message %></h1>
+          </div>
+          <% } %>
+          <div class="single-post-image">
+            <img src="/<%= post.image %>" />
+          </div>
+          <div class="single-post-info">
+            <h1 class="single-post-author">
+              posted by <b><%= post.username %></b>
+            </h1>
+            <h4 class="singlepost-creation-date">
+              <small>posted on:</small> <%= post.createdAt.toDateString() %>
+            </h4>
+          </div>
+          <div>
+            <p class="single-post-desc"><%= post.postdescription %></p>
+          </div>
+          <div class="post-actions">
+            <div class="action-left">
+              <a href=""><i class="fas fa-heart"></i></a>
+              <a href="" class="fa fa-comment"></a>
+            </div>
+            <% if(isAuthenticated){ %>
+            <div class="singlepost__action--right">
+              <a href="/editpost/<%= post.id %>?edit=true" class="edit-btn"
+                ><i class="fas fa-edit"></i> Edit</a
+              >
+
+              <form action="/deletepost" method="POST">
+                <button type="submit" class="delete">
+                  <i class="fas fa-trash-alt"></i>Delete
+                </button>
+                <input type="hidden" name="postId" value="<%= post._id %>" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <%}%> <%- include('../includes/sidebar.ejs') %>
+      </div>
+    </section>
+  </body>
+</html>

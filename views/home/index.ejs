@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <%- include('../includes/navbar.ejs') %>
+    <section class="blog-app">
+      <div class="container">
+        <%- include('../includes/leftbar.ejs') %>
+        <div class="articles-wrapper">
+          <% if(posts.length > 0){ %>
+          <h1 class="blog-title">Latest posts</h1>
+          <% }else{ %>
+          <h1 class="blog-title">No posts have been added yet</h1>
+          <% } %>
+
+          <div class="posts">
+            <% for (let post of posts){ %>
+            <div class="post">
+              <div class="post-image">
+                <img src="<%= post.image %>" alt="" />
+              </div>
+              <div class="post-info">
+                <span class="author">Author <b><%= post.username %></b></span>
+                <h4 class="creation-date">
+                  <small>posted on</small>
+                  <%= post.createdAt.toLocaleDateString() %>
+                </h4>
+              </div>
+              <h5 class="post-title">
+                <a href="/post/<%= post._id %>"><%= post.title %></a>
+              </h5>
+              <div class="post-actions">
+                <div class="action-left">
+                  <a href=""><i class="fas fa-heart"></i></a>
+                  <a href="" class="fa fa-comment"></a>
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <%if (isAuthenticated){ %><%- include('../includes/sidebar.ejs') %> <% }
+        %>
+      </div>
+    </section>
+  </body>
+</html>

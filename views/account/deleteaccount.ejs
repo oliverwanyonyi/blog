@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <%- include('../includes/navbar.ejs') %>
+    <section class="account-section" style="padding: 4rem 0">
+      <form action="/deleteaccount" class="form" method="POST">
+        <% if(message) {%>
+        <div class="message">
+          <h1 class="message-info"><%= message %></h1>
+        </div>
+        <% } %>
+        <div class="form-control">
+          <label for="email">Email</label>
+          <input
+            class="input"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="email address"
+          />
+        </div>
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input
+            class="input"
+            type="password"
+            name="password"
+            value=""
+            id="password"
+            placeholder="Enter password to delete"
+          />
+        </div>
+        <button type="submit">Delete Account</button>
+      </form>
+    </section>
+  </body>
+</html>
