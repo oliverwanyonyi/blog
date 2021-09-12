@@ -7,11 +7,14 @@ const MongoDbStore = require("connect-mongodb-session")(session);
 const path = require("path");
 const helmet = require("helmet");
 const compressor = require("compression");
+const dotenv = require("dotenv");
 // const morgan = require('morgan')
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const multer = require("multer");
+
+dotenv.config();
 
 const store = new MongoDbStore({
   uri: process.env.MONGO_URL,
