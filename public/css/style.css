@@ -520,6 +520,9 @@ label {
   .form {
     width: 90vw;
   }
+  .signup-section {
+    padding: 4rem 1.5rem;
+  }
   .form .row,
   .wrapper {
     grid-template-columns: 1fr;
