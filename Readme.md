@@ -39,4 +39,5 @@ to start the local development server.
 run command npm run devStart
 ```
 
-enjoy 🎉
+visit http://localhost:8080 on your favourite browser
+enjoy 🎉.

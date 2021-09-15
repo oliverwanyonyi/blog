@@ -18,7 +18,7 @@ const userSchema = new Schema({
   image: {
     type: String,
     required: false,
-    default: "",
+    default: "assets/avatar.jpg",
   },
   bio: {
     type: String,
