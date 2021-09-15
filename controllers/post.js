@@ -1,6 +1,7 @@
 const Post = require("../models/posts");
 const User = require("../models/user");
 const { post } = require("../routes/home");
+const Category = require("../models/categories");
 const errorUtil = require("../util/errormessage").getErrorMessage;
 exports.getpostController = (req, res, next) => {
   User.findById(req.session.user).then((user) => {
@@ -28,12 +29,14 @@ exports.postWrite = (req, res, next) => {
       const postDesc = req.body.postdescription;
       const image = req.file;
       console.log(image);
+
       if (!image) {
         req.flash("info", "Upload an image please.");
         return res.status(422).render("createpost/write", {
           editing: false,
           message: errorUtil(req.flash("info")),
           realuser: user,
+          pageTitle: "Write post 😉",
           prevInput: {
             image: image,
             category: category,
@@ -87,6 +90,7 @@ exports.deletePost = (req, res, next) => {
             res.status(422).render("singlepost/singlepost", {
               post: post,
               message: errorUtil(req.flash("info")),
+              pageTitle: "Single post",
             });
           })
           .catch((err) => console.log(err));

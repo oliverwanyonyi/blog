@@ -1,5 +1,7 @@
 .singlepost-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .singlepost-container .single-post {
   padding: 1.5rem 3rem;

@@ -8,13 +8,13 @@ const path = require("path");
 const helmet = require("helmet");
 const compressor = require("compression");
 const dotenv = require("dotenv");
-// const morgan = require('morgan')
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const multer = require("multer");
-
 dotenv.config();
+
+const port = process.env.PORT || 8080;
 
 const store = new MongoDbStore({
   uri: process.env.MONGO_URL,
@@ -23,6 +23,7 @@ const store = new MongoDbStore({
 
 app.set("view engine", "ejs");
 app.set("views", "views");
+
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -51,11 +52,8 @@ const postRoutes = require("./routes/post");
 const errorController = require("./controllers/error");
 const accountRoutes = require("./routes/account");
 
-// const accesslogstream = fs.createWriteStream(path.join(__dirname,'access.log',{flags:'a'}))
-
 app.use(helmet());
 app.use(compressor());
-// app.use(morgan('combined',{stream:accesslogstream}))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -75,10 +73,6 @@ app.use(
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.userLoggedIn;
-  // res.locals.realuser = req.session.user;
-  User.findById(req.session.user).then((user) => {
-    res.locals.realuser = user;
-  });
   next();
 });
 
@@ -95,8 +89,8 @@ mongoose
   })
   .then(() => {
     console.log("database connected");
-    app.listen(process.env.PORT || 8080, () => {
-      console.log("server is running at port 8080");
+    app.listen(port, () => {
+      console.log(`server is running at port ${port}`);
     });
   })
   .catch((err) => console.log(err));

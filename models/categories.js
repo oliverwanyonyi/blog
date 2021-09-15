@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Post = require("./posts");
 const categoriesSchema = new mongoose.Schema({
   category: {
     type: Array,
@@ -7,4 +8,4 @@ const categoriesSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Post", categoriesSchema);
+module.exports = mongoose.model("Category", categoriesSchema);

@@ -309,8 +309,8 @@ img.blur {
   padding: 4rem 4rem;
   min-height: calc(100vh - 4.5rem);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .wrapper {
@@ -524,6 +524,10 @@ label {
   }
   .signup-section {
     padding: 4rem 1.5rem;
+  }
+
+  .form {
+    padding: 0 1.7rem;
   }
   .form .row,
   .wrapper {
