@@ -71,8 +71,26 @@ app.use(
   })
 );
 app.use(flash());
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      if (!user) {
+        return next();
+      }
+      req.user = user;
+      next();
+    })
+    .catch((err) => {
+      next(new Error(err));
+    });
+});
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.userLoggedIn;
+  res.locals.user = req.user;
   next();
 });
 

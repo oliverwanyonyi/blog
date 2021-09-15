@@ -35,8 +35,11 @@ router.post(
       return true;
     }
   }),
-  check("bio", "bio should be atleast 30 characters")
-    .isLength({ min: 30, max: 300 })
+  check(
+    "bio",
+    "bio should be atleast 30 characters & not more than 1000 characters."
+  )
+    .isLength({ min: 30, max: 1000 })
     .trim(),
   signUpController.postSignUp
 );
@@ -44,7 +47,7 @@ router.post(
   "/login",
   check("email").isEmail().withMessage("Please enter a valid email"),
   body("password", "incorrect password please try again")
-    .isLength({ min: 8 })
+    .isLength({ min: 8, max: 16 })
     .isAlphanumeric()
     .trim(),
   signUpController.postSignIn

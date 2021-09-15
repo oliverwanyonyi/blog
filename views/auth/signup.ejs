@@ -20,14 +20,14 @@
         <div class="form-control">
           <div class="profile-img image-placeholder">
             <img src="" alt="" id="image" />
-            <img src="/assets/img.jpg" class="default" alt="" />
+            <img src="/assets/avatar.jpg" class="default" alt="" />
             <label for="file" id="fileInput" class="fileInput"
               ><i class="fas fa-plus"></i
             ></label>
             <input
               type="file"
               name="image"
-              value=" <% if(updating) {%> <%= realuser.image %> <% } else {%> <%= prevInput.image %> <%}%> "
+              value=" <% if(updating) {%> <%= user.image %> <% } else {%> <%= prevInput.image %> <%}%> "
               id="file"
             />
           </div>
@@ -39,7 +39,7 @@
             type="text"
             name="username"
             id="username"
-            value="<% if(updating) {%> <%= realuser.username %> <% } else {%> <%=prevInput.username%> <%}%>"
+            value="<% if(updating) {%> <%= user.username %> <% } else {%> <%=prevInput.username%> <%}%>"
             placeholder="username"
           />
         </div>
@@ -80,7 +80,7 @@
             "
             type="password"
             name="password"
-            value=" <% if(updating) {%> <%= realuser.password %> <% } else {%><%= prevInput.password %> <%}%> "
+            value=" <% if(updating) {%> <%= user.password %> <% } else {%><%= prevInput.password %> <%}%> "
             id="password"
             placeholder="password"
           />
@@ -114,7 +114,7 @@
             name="bio"
             id="bio"
           >
-<% if(updating) {%> <%= realuser.bio %> <% } else {%> <%= prevInput.bio %> <%}%> </textarea
+<% if(updating) {%> <%= user.bio %> <% } else {%> <%= prevInput.bio %> <%}%> </textarea
           >
         </div>
 

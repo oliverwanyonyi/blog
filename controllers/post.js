@@ -4,63 +4,57 @@ const { post } = require("../routes/home");
 const Category = require("../models/categories");
 const errorUtil = require("../util/errormessage").getErrorMessage;
 exports.getpostController = (req, res, next) => {
-  User.findById(req.session.user).then((user) => {
-    res.render("createpost/write", {
-      editing: false,
-      message: errorUtil(req.flash("info")),
-      realuser: user,
-      pageTitle: "write a post 😉",
-      prevInput: {
-        image: "",
-        category: "",
-        title: "",
-        postDesc: "",
-      },
-    });
+  res.render("createpost/write", {
+    editing: false,
+    message: errorUtil(req.flash("info")),
+    user: req.user,
+    pageTitle: "write a post 😉",
+    prevInput: {
+      image: "",
+      category: "",
+      title: "",
+      postDesc: "",
+    },
   });
 };
 
 exports.postWrite = (req, res, next) => {
-  User.findById(req.session.user)
-    .then((user) => {
-      const username = req.session.user.username;
-      const category = req.body.category;
-      const title = req.body.title;
-      const postDesc = req.body.postdescription;
-      const image = req.file;
-      console.log(image);
+  const username = req.session.user.username;
+  const category = req.body.category;
+  const title = req.body.title;
+  const postDesc = req.body.postdescription;
+  const image = req.file;
+  console.log(image);
 
-      if (!image) {
-        req.flash("info", "Upload an image please.");
-        return res.status(422).render("createpost/write", {
-          editing: false,
-          message: errorUtil(req.flash("info")),
-          realuser: user,
-          pageTitle: "Write post 😉",
-          prevInput: {
-            image: image,
-            category: category,
-            title: title,
-            postDesc: postDesc,
-          },
-        });
-      }
-      const imageUrl = image.path;
-      const post = new Post({
-        username: username,
+  if (!image) {
+    req.flash("info", "Upload an image please.");
+    return res.status(422).render("createpost/write", {
+      editing: false,
+      message: errorUtil(req.flash("info")),
+      user: req.user,
+      pageTitle: "Write post 😉",
+      prevInput: {
+        image: image,
         category: category,
         title: title,
-        image: imageUrl,
-        postdescription: postDesc,
-        userId: req.session.user._id,
-      });
-      post
-        .save()
-        .then(() => {
-          console.log("post created");
-          res.redirect("/");
-        })
-        .catch((err) => console.log(err));
+        postDesc: postDesc,
+      },
+    });
+  }
+  const imageUrl = image.path;
+  const post = new Post({
+    username: username,
+    category: category,
+    title: title,
+    image: imageUrl,
+    postdescription: postDesc,
+    userId: req.session.user._id,
+  });
+  post
+    .save()
+    .then(() => {
+      console.log("post created");
+      res.redirect("/");
     })
     .catch((err) => console.log(err));
 };
@@ -91,6 +85,7 @@ exports.deletePost = (req, res, next) => {
               post: post,
               message: errorUtil(req.flash("info")),
               pageTitle: "Single post",
+              user: req.user,
             });
           })
           .catch((err) => console.log(err));
@@ -120,6 +115,7 @@ exports.getEditPost = (req, res, next) => {
         editing: editMode,
         message: null,
         pageTitle: "edit post",
+        user: req.user,
       });
     })
     .catch((err) => console.log(err));
@@ -141,6 +137,7 @@ exports.postEditPost = (req, res, next) => {
             res.status(422).render("singlepost/singlepost", {
               post: post,
               message: req.flash("info"),
+              user: req.user,
             });
           })
           .catch((err) => console.log(err));

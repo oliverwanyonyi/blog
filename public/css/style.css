@@ -6,14 +6,6 @@
   font-family: montserat;
 }
 
-.color {
-  color: #05172b;
-  color: #2787ea;
-  color: #1c67d2;
-  color: #a4b0ff;
-  color: #ea7166;
-  color: #fca78a;
-}
 :root {
   --secondary: /*rgb(35, 34, 43)*/ #000000;
   --primary: rgba(20, 20, 20, 0.2);
@@ -83,14 +75,12 @@ ul li.profile a {
   width: 100%;
   display: block;
   height: 2px;
-  background: var(--blue);
+  background: linear-gradient(-45deg, var(--blue), var(--white));
   position: absolute;
   -webkit-transition: 500ms all;
   transition: 500ms all;
 }
-.hamburger-menu .line {
-  background: var(--white);
-}
+
 .menu-btn .line:nth-child(1),
 .hamburger-menu .line:nth-child(1) {
   top: 0;
@@ -308,9 +298,6 @@ img.blur {
 .signup-section {
   padding: 4rem 4rem;
   min-height: calc(100vh - 4.5rem);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .wrapper {
@@ -525,9 +512,8 @@ label {
   .signup-section {
     padding: 4rem 1.5rem;
   }
-
   .form {
-    padding: 0 1.7rem;
+    padding: 0 1.7rem !important;
   }
   .form .row,
   .wrapper {

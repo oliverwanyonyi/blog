@@ -3,34 +3,30 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const errorUtil = require("../util/errormessage").getErrorMessage;
 exports.getSignUp = (req, res, next) => {
-  User.findById(req.session.user).then((user) => {
-    res.render("auth/signup", {
-      message: errorUtil(req.flash("info")),
-      validationErrors: [],
-      updating: false,
-      prevInput: {
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      },
-      pageTitle: "signup",
-    });
+  res.render("auth/signup", {
+    message: errorUtil(req.flash("info")),
+    validationErrors: [],
+    updating: false,
+    prevInput: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    pageTitle: "signup",
   });
 };
 
 exports.getLogin = (req, res, next) => {
-  User.findById(req.session.user).then((user) => {
-    res.render("auth/login", {
-      message: errorUtil(req.flash("info")),
-      validationErrors: [],
-      prevInput: {
-        email: "",
-        password: "",
-      },
-      realuser: user,
-      pageTitle: "login",
-    });
+  res.render("auth/login", {
+    message: errorUtil(req.flash("info")),
+    validationErrors: [],
+    prevInput: {
+      email: "",
+      password: "",
+    },
+    user: req.user,
+    pageTitle: "login",
   });
 };
 
@@ -38,7 +34,6 @@ exports.postSignIn = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return res.status(422).render("auth/login", {
       validationErrors: errors.array(),

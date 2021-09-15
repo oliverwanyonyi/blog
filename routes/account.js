@@ -11,12 +11,13 @@ router.post(
     "we suggest a stronger password combination of characters and numbers"
   )
     .isAlphanumeric()
-    .isLength({ min: 8, max: 10 }),
+    .isLength({ min: 8, max: 16 })
+    .trim(),
   check(
     "bio",
-    "bio should be atleast 25 characters & not more than 100 characters."
+    "bio should be atleast 30 characters & not more than 1000 characters."
   )
-    .isLength({ min: 25, max: 300 })
+    .isLength({ min: 30, max: 1000 })
     .trim(),
   isAuth,
   settingsController.postUpdateAccount
