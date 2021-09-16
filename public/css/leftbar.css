@@ -19,11 +19,11 @@
 }
 .card-user {
   cursor: pointer;
-  background: rgba(20, 20, 20, 0.2);
+  background: #374650;
   padding: 1rem 1rem;
   width: 100%;
   margin: 1rem 0;
-  border: 1px solid #bcbcbc;
+  /* border: 1px solid #bcbcbc; */
   border-radius: 0.3rem;
 }
 .user {
@@ -50,6 +50,7 @@ blockquote {
   overflow: hidden;
   border: 3px solid #287be7;
   border-radius: 50%;
+  background: #1f2c33;
 }
 .avatar img {
   height: 100%;

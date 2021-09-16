@@ -7,8 +7,8 @@
 }
 
 :root {
-  --secondary: /*rgb(35, 34, 43)*/ #000000;
-  --primary: rgba(20, 20, 20, 0.2);
+  --secondary: #1f2c33;
+  --primary: #374650;
   --white: #ffffff;
   --greyish: #ececec;
   --blue: #1c67d2;
@@ -26,7 +26,8 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.3rem 2.5rem;
-  background: #0a0a0a;
+  background: var(--secondary);
+  box-shadow: var(--box-shadow);
   z-index: 3000;
 }
 nav ul {
@@ -236,6 +237,7 @@ img {
 .post-image {
   width: 90%;
   display: inline-block;
+  background: var(--secondary);
   height: 15rem;
   border-radius: 0.2rem;
   overflow: hidden;
@@ -381,6 +383,7 @@ label {
   height: 7rem;
   border-radius: 50%;
   border: 3px solid #a4b0ff;
+  background: var(--secondary);
   overflow: hidden;
 }
 .profile-img img {
@@ -497,6 +500,7 @@ label {
   .nav-links.active {
     height: max-content;
     padding: 2rem 0;
+    box-shadow: var(--box-shadow);
   }
   .nav-links li a {
     display: inline-flex;
