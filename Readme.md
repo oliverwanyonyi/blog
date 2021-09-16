@@ -13,31 +13,35 @@ this a simple blog website built with express js ejs and css
 - session based authentication with express-session
 - files upload with multer
 - serverside user input validation with express validator
-- a middleware to protect routes a user can only visit the create post page if they are logged in.
+- middleware to protect routes a user can only visit the create post page if they are logged in.
 
 ### getting started
 
 clone this repository into your machine.
-open the project with your code editor.
-on the terminal run the following command
-
-to install all the dependancies
+cd into the project directory.
+install all the dependancies
 
 ```npm
-run npm install
+npm install
 ```
 
+<<<<<<< HEAD
 to configure mongodb
 
 ```
 create a .env file configure a
+=======
+configuring mongodb
+
+```
+>>>>>>> b1d7e29fc0987e28a0b826906bcbf2a0ee229f75
 MONGO_URL = `your mongo url`
 ```
 
 to start the local development server.
 
 ```
-run command npm run devStart
+npm run devStart
 ```
 
 visit http://localhost:8080 on your favourite browser

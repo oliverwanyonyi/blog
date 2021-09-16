@@ -8,7 +8,7 @@ exports.getpostController = (req, res, next) => {
     editing: false,
     message: errorUtil(req.flash("info")),
     user: req.user,
-    pageTitle: "write a post 😉",
+    pageTitle: "write a post ✍🏻",
     prevInput: {
       image: "",
       category: "",
