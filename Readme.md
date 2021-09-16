@@ -1,7 +1,8 @@
 ## Blog website
 
 ![Blog website](public/assets/preview.png)
-[Live Demo](https://oliverblogger.herokuapp.com/)
+
+##### [Live Demo](https://oliverblogger.herokuapp.com/)
 
 ### description
 
@@ -26,10 +27,10 @@ to install all the dependancies
 run npm install
 ```
 
-to configuring the mongodb
+to configure mongodb
 
 ```
-create a .dotenv file where
+create a .env file configure a
 MONGO_URL = `your mongo url`
 ```
 
