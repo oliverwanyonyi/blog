@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <%- include('../includes/navbar.ejs') %>
+    <section id="categories">
+      <% if(successMessage) {%>
+      <div class="message success">
+        <h1 class="message-info"><%= successMessage %></h1>
+      </div>
+      <% } else if(errorMessage) { %>
+      <div class="message error">
+        <h1 class="message-info"><%= errorMessage %></h1>
+      </div>
+
+      <%}%>
+      <form action="/categories" method="POST" class="form">
+        <div class="form-control">
+          <input
+            type="text"
+            class="input"
+            placeholder="add categories"
+            name="category"
+            id=""
+          />
+          <button type="submit">Add category</button>
+        </div>
+      </form>
+    </section>
+    <%- include('../includes/script.ejs') %>
+  </body>
+</html>

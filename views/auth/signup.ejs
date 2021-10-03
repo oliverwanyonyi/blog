@@ -3,141 +3,147 @@
   <%- include('../includes/head.ejs') %>
   <body>
     <%- include('../includes/navbar.ejs') %>
-  </body>
-  <section class="signup-section">
-    <div>
-      <form
-        class="form"
-        action="<% if(updating){ %>/updateAccount <% }else { %>/signup <%}%>"
-        enctype="multipart/form-data"
-        method="POST"
-      >
-        <% if(message) {%>
-        <div class="message">
-          <h1 class="message-info"><%= message %></h1>
-        </div>
-        <% } %>
-        <div class="form-control">
-          <div class="profile-img image-placeholder">
-            <img src="" alt="" id="image" />
-            <img src="/assets/avatar.jpg" class="default" alt="" />
-            <label for="file" id="fileInput" class="fileInput"
-              ><i class="fas fa-plus"></i
-            ></label>
+    <section class="signup-section">
+      <div>
+        <form
+          class="form"
+          action="<% if(updating){ %>/updateAccount <% }else { %>/signup <%}%>"
+          enctype="multipart/form-data"
+          method="POST"
+        >
+          <% if(successMessage) {%>
+          <div class="message success">
+            <h1 class="message-info"><%= successMessage %></h1>
+          </div>
+          <% } else if(errorMessage) { %>
+          <div class="message error">
+            <h1 class="message-info"><%= errorMessage %></h1>
+          </div>
+
+          <%}%>
+          <div class="form-control">
+            <div class="profile-img image-placeholder">
+              <img src="" alt="" id="image" />
+              <img src="/assets/avatar.jpg" class="default" alt="" />
+              <label for="file" id="fileInput" class="fileInput"
+                ><i class="fas fa-plus"></i
+              ></label>
+              <input
+                type="file"
+                name="image"
+                value=" <% if(updating) {%> <%= user.image %> <% } else {%> <%= prevInput.image %> <%}%> "
+                id="file"
+              />
+            </div>
+          </div>
+          <div class="form-control">
+            <label for="username">User name</label>
             <input
-              type="file"
-              name="image"
-              value=" <% if(updating) {%> <%= user.image %> <% } else {%> <%= prevInput.image %> <%}%> "
-              id="file"
+              class="input"
+              type="text"
+              name="username"
+              id="username"
+              value="<% if(updating) {%> <%= user.username %> <% } else {%> <%=prevInput.username%> <%}%>"
+              placeholder="username"
             />
           </div>
-        </div>
-        <div class="form-control">
-          <label for="username">User name</label>
-          <input
-            class="input"
-            type="text"
-            name="username"
-            id="username"
-            value="<% if(updating) {%> <%= user.username %> <% } else {%> <%=prevInput.username%> <%}%>"
-            placeholder="username"
-          />
-        </div>
-        <% if(!updating) { %>
-        <div class="form-control">
-          <label for="email">Email</label>
-          <input
-            class="
-              input
-              <%=
-              validationErrors.find(e=>
-              e.param
-              ===
-              'email')?'invalid':''
-              %>
-            "
-            type="email"
-            name="email"
-            id="email"
-            value="<%= prevInput.email
+          <% if(!updating) { %>
+          <div class="form-control">
+            <label for="email">Email</label>
+            <input
+              class="
+                input
+                <%=
+                validationErrors.find(e=>
+                e.param
+                ===
+                'email')?'invalid':''
+                %>
+              "
+              type="email"
+              name="email"
+              id="email"
+              value="<%= prevInput.email
           %>"
-            placeholder="email address"
-          />
-        </div>
-        <% } %>
+              placeholder="email address"
+            />
+          </div>
+          <% } %>
 
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input
-            class="
-              input
-              <%=
-              validationErrors.find(e=>
-              e.param
-              ===
-              'password')?'invalid':''
-              %>
-            "
-            type="password"
-            name="password"
-            value=" <% if(updating) {%> <%= user.password %> <% } else {%><%= prevInput.password %> <%}%> "
-            id="password"
-            placeholder="password"
-          />
-        </div>
-        <% if(!updating) { %>
-        <div class="form-control">
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            class="
-              input
-              <%=
-              validationErrors.find(e=>
-              e.param
-              ===
-              'confirmPassword')?'invalid':''
-              %>
-            "
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="repeat password"
-            value="<%= prevInput.confirmPassword %>"
-          />
-        </div>
-        <% } %>
-        <div class="form-control">
-          <label for="bio">Bio</label>
-          <textarea
-            class="input"
-            placeholder="enter your bio here."
-            name="bio"
-            id="bio"
-          >
+          <div class="form-control">
+            <label for="password">Password</label>
+            <input
+              class="
+                input
+                <%=
+                validationErrors.find(e=>
+                e.param
+                ===
+                'password')?'invalid':''
+                %>
+              "
+              type="password"
+              name="password"
+              value=" <% if(updating) {%> <%= user.password %> <% } else {%><%= prevInput.password %> <%}%> "
+              id="password"
+              placeholder="password"
+            />
+          </div>
+          <% if(!updating) { %>
+          <div class="form-control">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              class="
+                input
+                <%=
+                validationErrors.find(e=>
+                e.param
+                ===
+                'confirmPassword')?'invalid':''
+                %>
+              "
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="repeat password"
+              value="<%= prevInput.confirmPassword %>"
+            />
+          </div>
+          <% } %>
+          <div class="form-control">
+            <label for="bio">Bio</label>
+            <textarea
+              class="input"
+              placeholder="enter your bio here."
+              name="bio"
+              id="bio"
+            >
 <% if(updating) {%> <%= user.bio %> <% } else {%> <%= prevInput.bio %> <%}%> </textarea
+            >
+          </div>
+
+          <%if(!updating){%> <button type="submit">Create account</button>
+          <h1 class="quick-link">
+            already have an account <a href="/login">login</a>
+          </h1>
+          <%} else { %>
+
+          <button type="submit">Update account</button>
+          <h1
+            style="
+              text-align: center;
+              color: wheat;
+              font-weight: normal;
+              margin: 1rem 0;
+            "
           >
-        </div>
-
-        <%if(!updating){%> <button type="submit">Create account</button>
-        <h1 class="quick-link">
-          already have an account <a href="/login">login</a>
-        </h1>
-        <%} else { %>
-
-        <button type="submit">Update account</button>
-        <h1
-          style="
-            text-align: center;
-            color: wheat;
-            font-weight: normal;
-            margin: 1rem 0;
-          "
-        >
-          or
-        </h1>
-        <a href="/deleteaccount" class="delete-account-btn">Delete account</a>
-        <%}%>
-      </form>
-    </div>
-  </section>
+            or
+          </h1>
+          <a href="/deleteaccount" class="delete-account-btn">Delete account</a>
+          <%}%>
+        </form>
+      </div>
+    </section>
+    <%- include('../includes/script.ejs') %>
+  </body>
 </html>

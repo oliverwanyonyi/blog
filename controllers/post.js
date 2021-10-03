@@ -1,36 +1,38 @@
 const Post = require("../models/posts");
 const User = require("../models/user");
-const { post } = require("../routes/home");
 const Category = require("../models/categories");
-const errorUtil = require("../util/errormessage").getErrorMessage;
+const { postCategories } = require("./admin");
 exports.getpostController = (req, res, next) => {
-  res.render("createpost/write", {
-    editing: false,
-    message: errorUtil(req.flash("info")),
-    user: req.user,
-    pageTitle: "write a post ✍🏻",
-    prevInput: {
-      image: "",
-      category: "",
-      title: "",
-      postDesc: "",
-    },
-  });
+  Category.find()
+    .then((categories) => {
+      res.render("createpost/write", {
+        editing: false,
+        user: req.user,
+        pageTitle: "write a post ✍🏻",
+        prevInput: {
+          image: "",
+          category: "",
+          title: "",
+          postDesc: "",
+        },
+        categories: categories,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postWrite = (req, res, next) => {
-  const username = req.session.user.username;
+  const username = req.user.username;
   const category = req.body.category;
   const title = req.body.title;
   const postDesc = req.body.postdescription;
   const image = req.file;
-  console.log(image);
+  console.log(category);
 
   if (!image) {
-    req.flash("info", "Upload an image please.");
+    req.flash("error", "Upload an image please.");
     return res.status(422).render("createpost/write", {
       editing: false,
-      message: errorUtil(req.flash("info")),
       user: req.user,
       pageTitle: "Write post 😉",
       prevInput: {
@@ -53,7 +55,7 @@ exports.postWrite = (req, res, next) => {
   post
     .save()
     .then(() => {
-      console.log("post created");
+      req.flash("success", "post was created successfully");
       res.redirect("/");
     })
     .catch((err) => console.log(err));
@@ -65,7 +67,6 @@ exports.getSinglepost = (req, res, next) => {
     .then((post) => {
       res.render("singlepost/singlepost", {
         post: post,
-        message: "",
         pageTitle: "single post",
       });
     })
@@ -75,23 +76,22 @@ exports.getSinglepost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   const postId = req.body.postId;
 
-  Post.findOne({ userId: req.session.user._id })
+  Post.findOne({ userId: req.user })
     .then((post) => {
       if (!post) {
-        req.flash("info", "You can only delete your post");
-        Post.findById(postId)
-          .then((post) => {
-            res.status(422).render("singlepost/singlepost", {
-              post: post,
-              message: errorUtil(req.flash("info")),
-              pageTitle: "Single post",
-              user: req.user,
-            });
-          })
-          .catch((err) => console.log(err));
+        // Post.findById(postId)
+        //   .then((post) => {
+        //     res.status(422).render("singlepost/singlepost", {
+        //       post: post,
+        //       pageTitle: "Single post",
+        //     });
+        //   })
+        //   .catch((err) => console.log(err));
+        res.redirect("/");
+        req.flash("error", "You can only delete your post");
       }
-
-      post.deleteOne();
+      req.flash("success", "post was deleted successfully");
+      return post.deleteOne();
     })
     .then(() => res.redirect("/"))
     .catch((err) => {
@@ -113,9 +113,11 @@ exports.getEditPost = (req, res, next) => {
       res.render("createpost/write", {
         post: post,
         editing: editMode,
-        message: null,
         pageTitle: "edit post",
         user: req.user,
+        categories: Category.find()
+          .then(() => console.log("categories"))
+          .catch((err) => console.log(err)),
       });
     })
     .catch((err) => console.log(err));
@@ -128,16 +130,17 @@ exports.postEditPost = (req, res, next) => {
   const postDesc = req.body.postdescription;
   const postId = req.body.postId;
   console.log(postId);
-  Post.findOne({ userId: req.session.user._id })
+  Post.findOne({ userId: req.user })
     .then((post) => {
       if (!post) {
-        req.flash("info", "you can only edit your post");
+        req.flash("error", "you can only edit your post");
+        console.log("you can only edit your post");
         return Post.findById(postId)
           .then((post) => {
             res.status(422).render("singlepost/singlepost", {
               post: post,
-              message: req.flash("info"),
               user: req.user,
+              pageTitle: "edit post",
             });
           })
           .catch((err) => console.log(err));
@@ -148,6 +151,7 @@ exports.postEditPost = (req, res, next) => {
         }
         post.title = updatedTitle;
         post.postdescription = postDesc;
+        req.flash("success", "post updated successfully");
         return post.save();
       }
     })

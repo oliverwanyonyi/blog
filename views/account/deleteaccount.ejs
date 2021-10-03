@@ -5,11 +5,16 @@
     <%- include('../includes/navbar.ejs') %>
     <section class="account-section" style="padding: 4rem 0">
       <form action="/deleteaccount" class="form" method="POST">
-        <% if(message) {%>
-        <div class="message">
-          <h1 class="message-info"><%= message %></h1>
+        <% if(successMessage) {%>
+        <div class="message success">
+          <h1 class="message-info"><%= successMessage %></h1>
         </div>
-        <% } %>
+        <% } else if(errorMessage) { %>
+        <div class="message error">
+          <h1 class="message-info"><%= errorMessage %></h1>
+        </div>
+
+        <%}%>
         <div class="form-control">
           <label for="email">Email</label>
           <input
@@ -34,5 +39,6 @@
         <button type="submit">Delete Account</button>
       </form>
     </section>
+    <%- include('../includes/script.ejs') %>
   </body>
 </html>

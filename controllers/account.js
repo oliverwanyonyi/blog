@@ -11,7 +11,6 @@ exports.getAccountPage = (req, res, next) => {
   }
 
   res.render("auth/signup", {
-    message: errorUtil(req.flash("info")),
     user: req.user,
     updating: updateMode,
     validationErrors: [],
@@ -37,7 +36,7 @@ exports.postUpdateAccount = (req, res, next) => {
     return res.status(422).render("auth/signup", {
       updating: true,
       validationErrors: errors.array(),
-      message: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg,
       user: req.user,
       prevInput: {
         username: userName,
@@ -52,17 +51,19 @@ exports.postUpdateAccount = (req, res, next) => {
     .hash(password, 10)
     .then((hashedPassword) => {
       req.user._id = req.session.user._id;
-      req.user.username = userName;
       req.user.password = hashedPassword;
       req.user.bio = bio;
       if (!image) {
-        req.flash("info", "Upload an image please.");
+        req.flash("error", "Upload an image please.");
         return res.redirect(`/user/${userId}?updateaccount=true`);
+      }
+      if (userName) {
+        req.user.username = userName;
       }
       if (image) {
         req.user.image = image.path;
       }
-      req.flash("info", "account updated successfully");
+      req.flash("success", "account updated successfully");
       return req.user.save();
     })
     .then(() => {
@@ -74,7 +75,6 @@ exports.postUpdateAccount = (req, res, next) => {
 
 exports.getDeleteAccount = (req, res, next) => {
   res.render("account/deleteaccount", {
-    message: errorUtil(req.flash("info")),
     user: req.user,
     pageTitle: "delete account 😥",
   });
@@ -89,7 +89,7 @@ exports.postDeleteAccount = (req, res, next) => {
       console.log(user);
       if (!user) {
         console.log("Email does not exist");
-        req.flash("info", "Email does not exists");
+        req.flash("error", "Email does not exists");
         res.redirect("/deleteaccount");
       }
 
@@ -97,15 +97,23 @@ exports.postDeleteAccount = (req, res, next) => {
         .compare(password, user.password)
         .then((correctpassword) => {
           if (correctpassword) {
-            req.flash("success", "user deleted successfullyy");
-
-            Post.findOne({ userId: req.session.user._id }).then((post) =>
+            Post.findOne({ userId: req.user._id }).then((post) =>
               post.remove()
             );
+
             user.deleteOne();
             return req.session.destroy((err) => {
               console.log(err);
-              res.redirect("/signup");
+              res.status(302).render("auth/login", {
+                successMessage: "you logged out successfully",
+                pageTitle: "login",
+                isAuthenticated: false,
+                validationErrors: [],
+                prevInput: {
+                  email: "",
+                  password: "",
+                },
+              });
             });
           }
         })

@@ -1,17 +1,16 @@
 const express = require("express");
-const fs = require("fs");
 const app = express();
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
 const path = require("path");
-const helmet = require("helmet");
 const compressor = require("compression");
 const dotenv = require("dotenv");
 const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const multer = require("multer");
+const errorUtil = require("./util/errormessage").getErrorMessage;
 dotenv.config();
 
 const port = process.env.PORT || 8080;
@@ -51,8 +50,8 @@ const signUpRoutes = require("./routes/auth");
 const postRoutes = require("./routes/post");
 const errorController = require("./controllers/error");
 const accountRoutes = require("./routes/account");
-
-app.use(helmet());
+const adminRoutes = require("./routes/admin.routes");
+const categories = require("./models/categories");
 app.use(compressor());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -91,6 +90,17 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.userLoggedIn;
   res.locals.user = req.user;
+  res.locals.successMessage = errorUtil(req.flash("success"));
+  res.locals.errorMessage = errorUtil(req.flash("error"));
+  categories
+    .find()
+    .then((cates) => {
+      if (!cates) {
+        return next();
+      }
+      res.locals.categories = cates;
+    })
+    .catch((err) => console.log(err));
   next();
 });
 
@@ -98,6 +108,7 @@ app.use(homeRoutes);
 app.use(signUpRoutes);
 app.use(postRoutes);
 app.use(accountRoutes);
+app.use(adminRoutes);
 app.use(errorController.getErrorPage);
 
 mongoose

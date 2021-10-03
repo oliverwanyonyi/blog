@@ -7,6 +7,10 @@ const fileInput = document.querySelector("#file");
 const image = document.querySelector("#image");
 const imageContainer = document.querySelector("image-placeholder");
 const defaultImage = document.querySelector(".default");
+const forms = document.querySelectorAll("form");
+// console.log(document.querySelector(".message"));
+
+// forms.forEach(form=>form.addEventListener('submit',()))
 
 menuBtn.addEventListener("click", () => {
   menuBtn.classList.toggle("close");
@@ -16,24 +20,6 @@ menuBtn.addEventListener("click", () => {
 hamburgerMenu.addEventListener("click", () => {
   hamburgerMenu.classList.toggle("close");
   leftNav.classList.toggle("active");
-});
-const revealPosts = (entries, observer) => {
-  const [entry] = entries;
-  if (!entry.isIntersecting) return;
-  entry.target.classList.remove("hidden");
-  entry.target.querySelector("img").classList.remove("blur");
-  observe.unobserve(entry.target);
-};
-
-const postsObserver = new IntersectionObserver(revealPosts, {
-  root: null,
-  threshold: 0.15,
-});
-console.log(posts);
-posts.forEach((post) => {
-  postsObserver.observe(post);
-  post.classList.add("hidden");
-  post.querySelector("img").classList.toggle("blur");
 });
 
 fileInput.addEventListener("change", function () {
@@ -52,4 +38,23 @@ fileInput.addEventListener("change", function () {
     image.style.display = null;
     image.setAttribute("src", "");
   }
+});
+
+const revealPosts = (entries, observer) => {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("hidden");
+  entry.target.querySelector("img").classList.remove("blur");
+  observe.unobserve(entry.target);
+};
+
+const postsObserver = new IntersectionObserver(revealPosts, {
+  root: null,
+  threshold: 0.15,
+});
+console.log(posts);
+posts.forEach((post) => {
+  postsObserver.observe(post);
+  post.classList.add("hidden");
+  post.querySelector("img").classList.toggle("blur");
 });

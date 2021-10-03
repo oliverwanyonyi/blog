@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const errorUtil = require("../util/errormessage").getErrorMessage;
 exports.getSignUp = (req, res, next) => {
   res.render("auth/signup", {
-    message: errorUtil(req.flash("info")),
     validationErrors: [],
     updating: false,
     prevInput: {
@@ -19,7 +18,6 @@ exports.getSignUp = (req, res, next) => {
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
-    message: errorUtil(req.flash("info")),
     validationErrors: [],
     prevInput: {
       email: "",
@@ -37,7 +35,7 @@ exports.postSignIn = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(422).render("auth/login", {
       validationErrors: errors.array(),
-      message: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg,
       isAuthenticated: false,
       prevInput: {
         email: email,
@@ -49,7 +47,7 @@ exports.postSignIn = (req, res, next) => {
 
   User.findOne({ email: email }).then((user) => {
     if (!user) {
-      req.flash("info", "Invalid Email address");
+      req.flash("error", "Invalid Email address");
       return res.redirect("/login");
     }
     bcrypt
@@ -58,6 +56,7 @@ exports.postSignIn = (req, res, next) => {
         if (correctPassword) {
           req.session.userLoggedIn = true;
           req.session.user = user;
+          req.flash("success", "Logged in successful");
           return req.session.save((err) => {
             console.log(err);
             res.redirect("/");
@@ -65,7 +64,7 @@ exports.postSignIn = (req, res, next) => {
         }
         return res.status(422).render("auth/login", {
           validationErrors: [],
-          message: "invalid email or password",
+          errorMessage: "invalid email or password",
           isAuthenticated: false,
           prevInput: {
             email: email,
@@ -85,7 +84,7 @@ exports.postSignUp = (req, res, next) => {
   const image = req.file;
   const bio = req.body.bio;
   if (!image) {
-    req.flash("info", "Please choose an image");
+    req.flash("error", "Please choose an image");
     return res.redirect("/signup");
   }
   const confirmPassword = req.body.confirmPassword;
@@ -94,7 +93,7 @@ exports.postSignUp = (req, res, next) => {
     console.log(errors.array());
     return res.status(422).render("auth/signup", {
       isAuthenticated: false,
-      message: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg,
       updating: false,
       prevInput: {
         image: image,
@@ -122,6 +121,7 @@ exports.postSignUp = (req, res, next) => {
       return user.save();
     })
     .then((result) => {
+      req.flash("success", "account was created successfully");
       res.redirect("/login");
     })
     .catch((err) => {
@@ -131,7 +131,15 @@ exports.postSignUp = (req, res, next) => {
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
-    console.log(err);
-    res.redirect("/");
+    res.status(302).render("auth/login", {
+      successMessage: "you logged out successfully",
+      pageTitle: "login",
+      isAuthenticated: false,
+      validationErrors: [],
+      prevInput: {
+        email: "",
+        password: "",
+      },
+    });
   });
 };

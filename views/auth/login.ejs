@@ -3,64 +3,72 @@
   <%- include('../includes/head.ejs') %>
   <body>
     <%- include('../includes/navbar.ejs') %>
+
+    <section class="signup-section">
+      <% if(successMessage) {%>
+      <div class="message success">
+        <h1 class="message-info"><%= successMessage %></h1>
+      </div>
+      <% } else if(errorMessage) { %>
+      <div class="message error">
+        <h1 class="message-info"><%= errorMessage %></h1>
+      </div>
+
+      <%}%>
+      <div>
+        <form class="form" action="/login" method="POST">
+          <div class="form-control">
+            <label for="email">Email</label>
+            <input
+              class="
+                input
+                <%=
+                validationErrors.find(e=>
+                e.param
+                ===
+                'email')?'invalid':''
+                %>
+              "
+              type="email"
+              name="email"
+              id="email"
+              value="<%= prevInput.email
+          %>"
+              placeholder="email address"
+            />
+          </div>
+          <div class="form-control">
+            <label for="password">Password</label>
+            <input
+              class="
+                input
+                <%=
+                validationErrors.find(e=>
+                e.param
+                ===
+                'password')?'invalid':''
+                %>
+              "
+              type="password"
+              name="password"
+              value="<%= prevInput.password
+          %>"
+              id="password"
+              placeholder="password"
+            />
+          </div>
+
+          <button type="submit">Login</button>
+
+          <div class="">
+            <h1 class="quick-link">
+              dont have an account yet <a href="/signup">signup</a>
+            </h1>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <%- include('../includes/script.ejs') %>
   </body>
-  <section class="signup-section">
-    <div>
-      <form class="form" action="/login" method="POST">
-        <% if(message) {%>
-        <div class="message">
-          <h1 class="message-info"><%= message %></h1>
-        </div>
-        <% } %>
-        <div class="form-control">
-          <label for="email">Email</label>
-          <input
-            class="
-              input
-              <%=
-              validationErrors.find(e=>
-              e.param
-              ===
-              'email')?'invalid':''
-              %>
-            "
-            type="email"
-            name="email"
-            id="email"
-            value="<%= prevInput.email
-          %>"
-            placeholder="email address"
-          />
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input
-            class="
-              input
-              <%=
-              validationErrors.find(e=>
-              e.param
-              ===
-              'password')?'invalid':''
-              %>
-            "
-            type="password"
-            name="password"
-            value="<%= prevInput.password
-          %>"
-            id="password"
-            placeholder="password"
-          />
-        </div>
-
-        <button type="submit">Login</button>
-
-        <div class="">
-          <h1 class="quick-link">
-            dont have an account yet <a href="/signup">signup</a>
-          </h1>
-        </div>
-      </form>
-    </div>
-  </section>
 </html>

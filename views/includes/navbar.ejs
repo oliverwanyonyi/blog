@@ -12,6 +12,16 @@
     <li class="nav-item"><a href="/login">Login</a></li>
     <li class="nav-item"><a href="/signup" class="signup">Sign up</a></li>
     <%} else { %>
+    <li class="nav-item has-child">
+      <a href="/categories">Categories</a>
+      <ul class="sub-nav">
+        <% for(cate of categories) {%>
+
+        <li class="nav-item"><a href="#"><%= cate.title %></a></li>
+
+        <%}%>
+      </ul>
+    </li>
     <li>
       <form action="/logout" method="POST">
         <button type="submit" class="logout-btn">Logout</button>

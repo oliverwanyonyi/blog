@@ -4,8 +4,16 @@
   <body>
     <%- include('../includes/navbar.ejs') %>
     <section class="blog-app">
+      <% if(successMessage) {%>
+      <div class="message success">
+        <h1 class="message-info"><%= successMessage %></h1>
+      </div>
+      <% } else if(errorMessage) { %>
+      <div class="message error">
+        <h1 class="message-info"><%= errorMessage %></h1>
+      </div>
+      <%}%>
       <div class="container">
-        <%- include('../includes/leftbar.ejs') %>
         <div class="articles-wrapper">
           <% if(posts.length > 0){ %>
           <h1 class="blog-title">Latest posts</h1>
@@ -43,5 +51,6 @@
         %>
       </div>
     </section>
+    <%- include('../includes/script.ejs') %>
   </body>
 </html>
