@@ -51,7 +51,7 @@ const postRoutes = require("./routes/post");
 const errorController = require("./controllers/error");
 const accountRoutes = require("./routes/account");
 const adminRoutes = require("./routes/admin.routes");
-const categories = require("./models/categories");
+const Categories = require("./models/categories");
 app.use(compressor());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -92,15 +92,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.successMessage = errorUtil(req.flash("success"));
   res.locals.errorMessage = errorUtil(req.flash("error"));
-  categories
-    .find()
-    .then((cates) => {
-      if (!cates) {
-        return next();
-      }
-      res.locals.categories = cates;
-    })
-    .catch((err) => console.log(err));
+
   next();
 });
 

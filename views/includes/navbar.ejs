@@ -13,13 +13,12 @@
     <li class="nav-item"><a href="/signup" class="signup">Sign up</a></li>
     <%} else { %>
     <li class="nav-item has-child">
-      <a href="/categories">Categories</a>
+      <a href="#">Categories</a>
       <ul class="sub-nav">
-        <% for(cate of categories) {%>
-
-        <li class="nav-item"><a href="#"><%= cate.title %></a></li>
-
-        <%}%>
+        <li class="nav-item"><a href="/admin/add-category">Add Category</a></li>
+        <li class="nav-item">
+          <a href="/admin/categories">View Categories</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -31,8 +30,8 @@
       <a href="/createpost" class="create-post">Create post</a>
     </li>
 
-    <li class="nav-item profile">
-      <a href="/user/<%= user._id %>?updateaccount=true"
+    <li class="nav-item">
+      <a href="/user/<%= user._id %>?updateaccount=true" class="profile"
         ><img src="/<%= user.image %>" alt=""
       /></a>
     </li>

@@ -3,7 +3,7 @@ const Post = require("./posts");
 const categoriesSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
 });

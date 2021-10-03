@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../includes/head.ejs') %>
+  <body>
+    <section>
+      <%- include('../includes/navbar.ejs') %>
+
+      <div class="categories-wrapper">
+        <% for( cate of categories ) {%>
+
+        <div class="category">
+          <h4><%= cate.title %></h4>
+          <div class="btns">
+            <a href="/admin/edit-category/<%= cate._id %>?edit=true">Edit</a>
+            <form action="/admin/delete-category" method="post">
+              <input type="hidden" name="cateId" value="<%= cate._id %>" />
+              <button>Delete</button>
+            </form>
+          </div>
+        </div>
+
+        <%}%>
+      </div>
+    </section>
+  </body>
+</html>

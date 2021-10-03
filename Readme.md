@@ -1,9 +1,12 @@
 ## Blog website
 
+<<<<<<< HEAD
 ![Blog website](public/assets/preview.png)
 
 ##### [Live Demo](https://oliverblogger.herokuapp.com/)
 
+=======
+>>>>>>> 4c22260bf0763b12167b6fd5798aa028ffd2a1d8
 ### description
 
 this a simple blog website built with express js ejs and css

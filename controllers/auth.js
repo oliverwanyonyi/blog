@@ -2,7 +2,9 @@ const User = require("../models/user");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const errorUtil = require("../util/errormessage").getErrorMessage;
-exports.getSignUp = (req, res, next) => {
+const Categories = require("../models/categories");
+exports.getSignUp = async (req, res, next) => {
+  const categories = await Categories.find();
   res.render("auth/signup", {
     validationErrors: [],
     updating: false,
@@ -13,10 +15,12 @@ exports.getSignUp = (req, res, next) => {
       confirmPassword: "",
     },
     pageTitle: "signup",
+    categories,
   });
 };
 
-exports.getLogin = (req, res, next) => {
+exports.getLogin = async (req, res, next) => {
+  const categories = await Categories.find();
   res.render("auth/login", {
     validationErrors: [],
     prevInput: {
@@ -25,6 +29,7 @@ exports.getLogin = (req, res, next) => {
     },
     user: req.user,
     pageTitle: "login",
+    categories,
   });
 };
 

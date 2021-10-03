@@ -14,17 +14,36 @@
       </div>
 
       <%}%>
-      <form action="/categories" method="POST" class="form">
+      <form
+        action="<% if(editing) {%>/admin/edit-category <%} else {%>/admin/add-category<%}%>"
+        method="POST"
+        class="form"
+      >
         <div class="form-control">
+          <% if(editing) {%>
           <input
             type="text"
             class="input"
             placeholder="add categories"
+            value="<%= category.title %>"
             name="category"
-            id=""
           />
+          <%} else { %>
+          <input
+            type="text"
+            class="input"
+            name="category"
+            value=""
+            placeholder="add categories"
+          />
+
+          <%}%> <% if(editing) {%>
+          <button type="submit">Update category</button>
+          <%} else {%>
           <button type="submit">Add category</button>
+          <%}%>
         </div>
+        <input type="hidden" name="cateId" value="<%= category._id %>" />
       </form>
     </section>
     <%- include('../includes/script.ejs') %>
