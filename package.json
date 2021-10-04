@@ -1,7 +1,7 @@
 {
   "name": "fullstack-todos",
   "version": "1.0.0",
-  "description": "todos website",
+  "description": "blog website",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,6 +10,7 @@
   "author": "Oliver",
   "license": "ISC",
   "dependencies": {
+    "ansi-regex": "^6.0.1",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
