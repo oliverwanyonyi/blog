@@ -1,12 +1,11 @@
 ## Blog website
 
-<<<<<<< HEAD
+
 ![Blog website](public/assets/preview.png)
 
 ##### [Live Demo](https://oliverblogger.herokuapp.com/)
 
-=======
->>>>>>> 4c22260bf0763b12167b6fd5798aa028ffd2a1d8
+
 ### description
 
 this a simple blog website built with express js ejs and css
@@ -28,16 +27,15 @@ install all the dependancies
 npm install
 ```
 
-<<<<<<< HEAD
 to configure mongodb
 
-```
-create a .env file configure a
-=======
-configuring mongodb
+
+create a .env and include enviroment variable MONGO_URL:
+
+
 
 ```
->>>>>>> b1d7e29fc0987e28a0b826906bcbf2a0ee229f75
+
 MONGO_URL = `your mongo url`
 ```
 
