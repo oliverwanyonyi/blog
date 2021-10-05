@@ -1,8 +1,6 @@
 ## Blog website
 
 
-![Blog website](public/assets/preview.png)
-
 ##### [Live Demo](https://oliverblogger.herokuapp.com/)
 
 
